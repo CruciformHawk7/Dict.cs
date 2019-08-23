@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 
 namespace DictCS {
-    public class Dict {
+    public class BasicDictionary {
         private string dictFile;
         public Dictionary<string, List<string>> myDictionary { get; set; }
 
-        public Dict(string inputDictonaryFile = "Dictionary.txt") {
+        public BasicDictionary(string inputDictonaryFile = "Dictionary.txt") {
             dictFile = inputDictonaryFile;
             myDictionary = readFile();
         }
@@ -18,7 +18,7 @@ namespace DictCS {
             string[] seperators = { "\n", "\r", "\n\r" };
             string[] words = textInFile.Split(seperators, StringSplitOptions.None);
             foreach (var word in words) {
-                string sortedWord = sortText(word);
+                string sortedWord = SortText(word);
                 if (!dictionaryVals.ContainsKey(sortedWord)) {
                     var newList = new List<string>();
                     newList.Add(word);
@@ -32,7 +32,7 @@ namespace DictCS {
             return dictionaryVals;
         }
 
-        private string sortText(string text) {
+        private string SortText(string text) {
             var temp = text.ToCharArray();
             for (int i=0; i<text.Length; i++) {
                 for (int j=0; j<text.Length-i-1; j++) {
@@ -45,5 +45,19 @@ namespace DictCS {
             }
             return new string(temp);
         }
+
+        public bool IsWord(string word) {
+            if (myDictionary.ContainsKey(SortText(word))) return true;
+            else return false;
+        }
+
+        public string[] AnagramsOf(string word) {
+            try {
+                return myDictionary[SortText(word)].ToArray();
+            } catch (Exception) {
+                return null;
+            }
+        }
+
     }
 }

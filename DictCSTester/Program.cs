@@ -7,8 +7,8 @@ using DictCS;
 
 namespace DictCSTester {
     class Program {
-        static void Main(string[] args) {
-            Dict cs = new Dict();
+        static void Main(string[]) {
+            BasicDictionary cs = new BasicDictionary();
             var t = cs.myDictionary;
             Console.WriteLine("Size of t: {0}", t.Count);
             foreach (var item in t) {
