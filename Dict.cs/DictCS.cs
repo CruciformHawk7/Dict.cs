@@ -5,10 +5,10 @@ using System.Collections.Generic;
 namespace DictCS {
     public class BasicDictionary {
         private string dictFile;
-        public Dictionary<string, List<string>> myDictionary { get; set; }
+        public Dictionary<string, List<string>> myDictionary { get; private set; }
 
-        public BasicDictionary(string inputDictonaryFile = "Dictionary.txt") {
-            dictFile = inputDictonaryFile;
+        public BasicDictionary(string inputDictionaryFile = "Dictionary.txt") {
+            dictFile = inputDictionaryFile;
             myDictionary = readFile();
         }
 

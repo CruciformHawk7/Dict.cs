@@ -7,17 +7,40 @@ using DictCS;
 
 namespace DictCSTester {
     class Program {
-        static void Main(string[]) {
-            BasicDictionary cs = new BasicDictionary();
-            var t = cs.myDictionary;
-            Console.WriteLine("Size of t: {0}", t.Count);
-            foreach (var item in t) {
-                Console.Write("Key: {0}, Value: {{ ", item.Key);
-                foreach (var listItem in item.Value) 
-                    Console.Write("{0} ", listItem);
-                Console.WriteLine("}");
+        static BasicDictionary BD;
+        static void Main(string[] args) {
+            BD = new BasicDictionary();
+            while (true) {
+                //foreach(var v in BD.myDictionary)
+                //{
+                //    Console.Write(v.Key);
+                //    foreach(var p in v.Value)
+                //    {
+                //        Console.Write(" {0}", p);
+                //    }
+                //    Console.WriteLine();
+                //}
+                Console.Write("> ");
+                string Command = Console.ReadLine();
+                string[] separator = { " " };
+                string[] wordsInCmd = Command.Split(separator, StringSplitOptions.None);
+                switch(wordsInCmd[0].ToLower())
+                {
+                    case "isword":
+                        Console.WriteLine(BD.IsWord(wordsInCmd[1].ToLower()));
+                        break;
+                    case "anagramof":
+                        var op = (BD.AnagramsOf(wordsInCmd[1].ToLower()));
+                        foreach (var p in op) Console.Write("{0} ", p);
+                        Console.WriteLine();
+                        break;
+                    case "exit":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid Command!");
+                        break;
+                }
             }
-            Console.Read();
         }
     }
 }
