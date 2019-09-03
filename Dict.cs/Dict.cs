@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace DictCS {
@@ -7,12 +8,14 @@ namespace DictCS {
     /// </summary>
     public class Dict : BasicDictionary {
 
-        private string LearntWordsFileName;
+        private string LearntWordsFileName { get; set; }
 
-        private string WordWeightFileName;
+        private string WordWeightFileName { get; set; }
 
         static internal Dictionary<char, char[]> Neighbours;
         // Neighbours holds a path to a probable mistyped letter
+
+        internal Dictionary<char, List<string>> AllWord;
 
         static internal int WordLearningFrequency = 3;
         // determines how frequently a word has to be used to be "learnt"
@@ -41,8 +44,10 @@ namespace DictCS {
             : base(InputFileName) {
             this.LearntWordsFileName = LearntWordsFileName;
             this.WordWeightFileName = WordWeightFileName;
+            AllWord = new Dictionary<char, List<string>>();
             Neighbours = new Dictionary<char, char[]>();
             LearntWords = new Dictionary<string, int>();
+            FillAllWords();
             GenerateNeighbours();
         }
 
@@ -58,6 +63,32 @@ namespace DictCS {
                 return newWord;
             }
             return result;
+        }
+
+        public string[] SuggestWord(string partWord) {
+            if (partWord == null || partWord == "") return null;
+            else if (partWord.Length == 1) {
+                return AllWord[partWord[0]].ToArray();
+            } else {
+                var temp = AllWord[partWord[0]];
+                var op = temp.Where(pw => pw.Contains(partWord));
+                return op.ToArray();
+            }
+        }
+
+        internal void FillAllWords() {
+            foreach(string word in base.AllWords) {
+                if (word == "") continue;
+                if (AllWord.ContainsKey(word[0])) {
+                    var temp = AllWord[word[0]];
+                    temp.Add(word);
+                    AllWord[word[0]] = temp;
+                } else {
+                    List<string> temp = new List<string>();
+                    temp.Add(word);
+                    AllWord.Add(word[0], temp);
+                }
+            }
         }
 
         /// <summary>

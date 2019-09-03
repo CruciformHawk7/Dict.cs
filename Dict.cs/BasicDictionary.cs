@@ -25,13 +25,13 @@ namespace DictCS {
         public BasicDictionary(string inputDictionaryFile = "Dictionary.txt") {
             DictFile = inputDictionaryFile;
             myDictionary = new Dictionary<string, List<string>>();
-            readFile();
+            ReadFile();
         }
 
         /// <summary>
         /// reads the file and generates the map
         /// </summary>
-        private void readFile() {
+        private void ReadFile() {
             string textInFile = File.ReadAllText(DictFile);
             string[] seperators = { "\n", "\r", "\n\r" };
             AllWords = textInFile.Split(seperators, StringSplitOptions.None);
@@ -60,12 +60,12 @@ namespace DictCS {
             }
         }
 
-                    /// <summary>
-            /// sorts the letters of the text
-            /// </summary>
-            /// <returns>
-            /// string with letters sorted lexically
-            /// </returns>
+        /// <summary>
+        /// sorts the letters of the text
+        /// </summary>
+        /// <returns>
+        /// string with letters sorted lexically
+        /// </returns>
         internal string SortText(string text) {
             // convert the text to character array
             var temp = text.ToCharArray();

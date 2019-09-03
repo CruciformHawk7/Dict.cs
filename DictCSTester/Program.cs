@@ -39,6 +39,9 @@ namespace DictCSTester {
             while (true) {
                 Console.Write("> ");
                 string Command = Console.ReadLine();
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Title = "Dict.CS Test Module";
                 string[] separator = { " " };
                 string[] wordsInCmd = Command.Split(separator, StringSplitOptions.None);
                 switch(wordsInCmd[0].ToLower())
@@ -58,6 +61,14 @@ namespace DictCSTester {
                         break;
                     case "exit":
                         return;
+                    case "clear":
+                        Console.Clear();
+                        break;
+                    case "partword":
+                        var PartWordArray = BD.SuggestWord(wordsInCmd[1]);
+                        foreach (var word in PartWordArray) Console.Write("{0} ", word);
+                        Console.WriteLine();
+                        break;
                     default:
                         Console.WriteLine("Invalid Command!");
                         break;
